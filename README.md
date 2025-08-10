@@ -38,8 +38,8 @@ data/
 CSV 檔案格式：
 ```csv
 image,Ingredients,GT
-fabric_001.jpg,"棉花, 聚酯纖維",編織
-fabric_002.jpg,"羊毛, 絲綢",針織
+fabric_001.jpg,"羊毛",製程工序1
+fabric_002.jpg,"絲綢",製程工序2
 ```
 
 ### 2. 模型推理
