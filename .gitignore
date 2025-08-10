@@ -1,0 +1,64 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyTorch
+*.pt
+*.pth
+
+# Virtual environment
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Data files
+data/
+*.csv
+*.jpg
+*.png
+*.gif
+*.jpeg
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Model outputs and results
+confusion_matrix*.png
+classification_report.txt
+training_history.png
+best_*.pt
+*_final.pt
+
+# Environment variables
+.env
