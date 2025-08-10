@@ -1,29 +1,3 @@
-"""
-Textile Process Classification - Inference Interface
-
-This module provides an easy-to-use inference interface for the trained textile
-classification model, including a beautiful Gradio web interface for interactive
-predictions.
-
-Features:
-- Load trained models for inference
-- Process single images with ingredient descriptions
-- Web interface for easy testing and demonstration
-- Support for batch predictions
-
-Usage:
-    # Command line
-    python inference.py --model_path best_textile_model.pt
-    
-    # Programmatic usage
-    from inference import TextilePredictor
-    predictor = TextilePredictor('best_textile_model.pt')
-    results = predictor.predict(image, ingredients)
-
-Author: Your Name
-Date: 2024
-"""
-
 import os
 import argparse
 import torch
@@ -42,12 +16,6 @@ from torchvision import transforms
 
 
 class TextilePredictor:
-    """
-    Easy-to-use predictor class for textile process classification
-    
-    This class handles model loading, image preprocessing, and prediction
-    in a user-friendly interface.
-    """
     
     def __init__(self, model_path: str, device: Optional[str] = None):
         """
@@ -170,16 +138,7 @@ class TextilePredictor:
         return combined_tensor.unsqueeze(0)  # Add batch dimension
     
     def _process_text(self, text: str, max_length: int = 77) -> Dict[str, torch.Tensor]:
-        """
-        Process text input for the model
-        
-        Args:
-            text: Input text string
-            max_length: Maximum sequence length
-            
-        Returns:
-            Dictionary with tokenized text tensors
-        """
+
         if not text:
             # Return empty tokens if no text provided
             return {
@@ -203,17 +162,6 @@ class TextilePredictor:
     
     def predict(self, image: Image.Image, ingredients: str = "", 
                 top_k: int = 5) -> List[Tuple[str, float]]:
-        """
-        Make predictions for a single image
-        
-        Args:
-            image: PIL Image of the fabric
-            ingredients: String describing fabric ingredients (optional)
-            top_k: Number of top predictions to return
-            
-        Returns:
-            List of (class_name, confidence) tuples sorted by confidence
-        """
         try:
             with torch.no_grad():
                 # Process inputs
@@ -269,16 +217,7 @@ class TextilePredictor:
     
     def batch_predict(self, images: List[Image.Image], 
                      ingredients_list: List[str]) -> List[List[Tuple[str, float]]]:
-        """
-        Make predictions for multiple images
-        
-        Args:
-            images: List of PIL Images
-            ingredients_list: List of ingredient descriptions (same length as images)
-            
-        Returns:
-            List of prediction results for each image
-        """
+
         if len(images) != len(ingredients_list):
             raise ValueError("Number of images and ingredients must match")
         
@@ -295,15 +234,6 @@ class TextilePredictor:
 
 
 def create_gradio_interface(model_path: str = "best_textile_model.pt"):
-    """
-    Create an interactive Gradio web interface for textile classification
-    
-    Args:
-        model_path: Path to the trained model file
-        
-    Returns:
-        Gradio Blocks interface
-    """
     
     # Initialize predictor
     try:
