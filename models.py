@@ -1,14 +1,3 @@
-"""
-Multi-modal Textile Classification Models
-
-This module contains the core models and dataset classes for textile manufacturing
-process classification. The approach combines visual features (RGB + LBP texture) 
-with textual descriptions using Swin Transformer and CLIP.
-
-Author: Your Name
-Date: 2024
-"""
-
 import os
 import torch
 import torch.nn as nn
@@ -25,12 +14,6 @@ from skimage import feature
 
 
 class TextureAnalyzer:
-    """
-    Analyzes fabric texture using Local Binary Pattern (LBP)
-    
-    LBP is particularly effective for capturing local texture patterns
-    in fabric images, helping distinguish between different weaving patterns.
-    """
     
     def __init__(self, radius=1, n_points=8):
         self.radius = radius
@@ -59,12 +42,6 @@ class TextureAnalyzer:
 
 
 class TextileDataset(Dataset):
-    """
-    Custom PyTorch Dataset for textile classification
-    
-    Handles multimodal inputs: fabric images + ingredient descriptions + process labels
-    Supports both training and inference modes with appropriate data augmentation.
-    """
     
     def __init__(self, csv_file, image_dir, tokenizer=None, max_text_length=77, 
                  training_mode=True, use_texture_features=True):
@@ -274,10 +251,6 @@ class ChannelAdapter(nn.Module):
 
 
 class CrossModalAttention(nn.Module):
-    """
-    Cross-attention mechanism for fusing visual and textual features
-    Allows information flow between different modalities
-    """
     
     def __init__(self, feature_dim, num_heads=8, dropout_rate=0.1):
         super().__init__()
@@ -302,11 +275,6 @@ class CrossModalAttention(nn.Module):
         )
     
     def forward(self, query_features, key_value_features):
-        """
-        Args:
-            query_features: Features to be updated (B, 1, D)
-            key_value_features: Features to attend to (B, 1, D)
-        """
         # Apply layer norm before attention
         query_norm = self.norm1(query_features)
         kv_norm = self.norm1(key_value_features)
@@ -325,10 +293,6 @@ class CrossModalAttention(nn.Module):
 
 
 class BidirectionalFusion(nn.Module):
-    """
-    Bidirectional fusion of visual and textual features
-    Allows both modalities to influence each other
-    """
     
     def __init__(self, feature_dim, num_heads=8, dropout_rate=0.1):
         super().__init__()
@@ -344,11 +308,7 @@ class BidirectionalFusion(nn.Module):
         )
     
     def forward(self, visual_features, text_features):
-        """
-        Args:
-            visual_features: Visual feature tensor (B, 1, D)
-            text_features: Text feature tensor (B, 1, D)
-        """
+        
         # Cross-modal attention in both directions
         v2t = self.visual_to_text(visual_features, text_features)
         t2v = self.text_to_visual(text_features, visual_features)
@@ -361,12 +321,6 @@ class BidirectionalFusion(nn.Module):
 
 
 class TextileSwinCLIPClassifier(nn.Module):
-    """
-    Main model for textile process classification
-    
-    Combines Swin Transformer (visual), CLIP text encoder, and LBP texture analysis
-    Uses bidirectional attention for multimodal fusion.
-    """
     
     def __init__(self, num_classes, 
                  swin_model_name="microsoft/swin-base-patch4-window7-224",
@@ -493,9 +447,6 @@ class TextileSwinCLIPClassifier(nn.Module):
 
 
 class ContrastiveLoss(nn.Module):
-    """
-    Contrastive loss for similarity learning between visual-text features and process labels
-    """
     
     def __init__(self, temperature=0.07):
         super().__init__()
@@ -541,7 +492,7 @@ class ContrastiveLoss(nn.Module):
 
 
 def create_data_collate_fn():
-    """Create custom collate function for DataLoader"""
+
     def collate_fn(batch):
         # Filter out non-tensor fields that can't be batched
         keys_to_exclude = ['image_path', 'process_name']
