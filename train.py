@@ -1,23 +1,3 @@
-"""
-Training script for textile process classification model
-
-This script handles the complete training pipeline including data loading,
-model training, validation, and result visualization with confusion matrices.
-
-Usage:
-    python train.py
-
-The script will automatically:
-1. Load and prepare datasets
-2. Initialize the multimodal model
-3. Train with early stopping
-4. Generate validation reports and confusion matrices
-5. Save the best performing model
-
-Author: Your Name
-Date: 2024
-"""
-
 import os
 import sys
 import torch
@@ -40,13 +20,7 @@ from models import (
 
 
 class TextileTrainer:
-    """
-    Main trainer class for textile classification
-    
-    Handles all aspects of training including data preparation, model setup,
-    training loop, validation, and result saving.
-    """
-    
+
     def __init__(self, config):
         self.config = config
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
